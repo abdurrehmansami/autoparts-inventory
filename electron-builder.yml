@@ -1,0 +1,31 @@
+appId: pk.autoparts.inventory
+productName: AutoParts Inventory
+directories:
+  buildResources: resources
+  output: release/${version}
+files:
+  - 'out/**'
+  - 'package.json'
+  - '!**/*.{map,md,ts,tsx}'
+extraResources:
+  # SQL migrations are applied at startup from process.resourcesPath/drizzle
+  - from: drizzle
+    to: drizzle
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  executableName: AutoPartsInventory
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  shortcutName: AutoParts Inventory
+linux:
+  target: [AppImage]
+  category: Office
+  # Electron's Wayland backend segfaults on Ubuntu 26.04; XWayland works everywhere
+  executableArgs: ['--ozone-platform=x11']
+  maintainer: AutoParts Inventory
+npmRebuild: false
+publish: null
